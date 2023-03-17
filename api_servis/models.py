@@ -11,6 +11,7 @@ class Order(models.Model):
     invoice_number = models.PositiveIntegerField(
         verbose_name='Номер накладной из Google Sheets',
         help_text='Введите номер накладной из Google Sheets',
+        unique=True,
     )
     price = MoneyField(
         max_digits=14,

@@ -14,7 +14,7 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'task_check_date_delivery_task': {
         'task': 'api_servis.tasks.check_date_delivery_task',
-        'schedule': crontab(minute=58, hour=10),
+        'schedule': crontab(minute=15, hour=9),
     },
     'task_parse_google_sheets': {
         'task': 'api_servis.tasks.parse_google_sheets',

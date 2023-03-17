@@ -1,9 +1,17 @@
 from django.shortcuts import render
+from django.views.decorators.http import require_GET
 
 from .models import Order
 
 
+@require_GET
 def analytics(request):
+    '''
+        Возвращает шаблон с данными о заказах для анализа.
+
+    :param request: Принимает GET запрос, возвращает шаблон с данными.
+    :return: Шаблон 'analytics.html'
+    '''
     orders = Order.objects.all().order_by('order_number')
     data = {}
     for order in orders:
