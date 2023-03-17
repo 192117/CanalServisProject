@@ -41,8 +41,7 @@ services:
       bash -c "python manage.py collectstatic --noinput
       && python manage.py makemigrations
       && python manage.py migrate
-      && gunicorn CanalServisProject.wsgi:application -b :8000
-      && python bot/start_bot.py"
+      && gunicorn CanalServisProject.wsgi:application -b :8000"
     ports:
       - '8005:8000'
     volumes:
