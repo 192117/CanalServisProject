@@ -1,0 +1,28 @@
+<style>
+    #container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    #chart-container {
+      flex-basis: 60%;
+      max-width: 60%;
+    }
+    #table-container {
+      flex-basis: 40%;
+      max-width: 60%;
+    }
+    table {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 5px;
+      font-size: 150%;
+    }
+    h2 {
+      font-size: 120%;
+    }
+</style>
