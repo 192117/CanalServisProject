@@ -1,0 +1,72 @@
+version: '3.9'
+
+services:
+  celery:
+    build: .
+    container_name: 'celery_canal'
+    command: >
+      bash -c "celery -A api_servis worker --beat --loglevel=info"
+    volumes:
+      - .:/code
+      - ./.env.docker:/code/.env
+      - canalservis_static:/code/static/
+      - canalservis_media:/code/media/
+    links:
+      - redis
+    depends_on:
+      - backend
+      - redis
+  db:
+    restart: always
+    image: postgres:15.0-alpine
+    container_name: 'canalservis_db'
+    env_file:
+      - ./.env.docker
+    expose:
+      - '5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mail_app"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  backend:
+    build: .
+    container_name: 'backend_canalservis'
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >
+      bash -c "python manage.py collectstatic --noinput
+      && python manage.py makemigrations
+      && python manage.py migrate
+      && gunicorn CanalServisProject.wsgi:application -b :8000
+      && python bot/start_bot.py"
+    ports:
+      - '8005:8000'
+    volumes:
+      - ./.env.docker:/code/.env
+      - canalservis_static:/code/static/
+      - canalservis_media:/code/media/
+  redis:
+    image: redis/redis-stack:latest
+    container_name: redis_canalservis
+    expose:
+      - '6379'
+    volumes:
+      - redis_data:/data
+  telegram_bot:
+    build: .
+    environment:
+      - TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
+    command: python bot/start_bot.py
+    depends_on:
+      - db
+
+
+volumes:
+  postgres_data:
+  redis_data:
+  canalservis_static:
+  canalservis_media:

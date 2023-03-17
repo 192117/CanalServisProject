@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Заказы</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    #container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    #chart-container {
+      flex-basis: 60%;
+      max-width: 60%;
+    }
+    #table-container {
+      flex-basis: 40%;
+      max-width: 60%;
+    }
+    table {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 5px;
+      font-size: 150%;
+    }
+    h2 {
+      font-size: 120%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Заказы</h1>
+  <div id="container">
+    <div id="chart-container">
+      <canvas id="myChart" width="500" height="300"></canvas>
+    </div>
+    <div id="table-container">
+      <h2>Общая стоимость заказов: {{ total_cost }}</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>№</th>
+            <th>Заказ №</th>
+            <th>Стоимость заказа, руб</th>
+            <th>Срок поставки</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+          <tr>
+            <td>{{ order.order_number }}</td>
+            <td>{{ order.invoice_number }}</td>
+            <td>{{ order.price }}</td>
+            <td>{{ order.date_delivery }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {{ dates|safe }},
+            datasets: [{
+                label: 'Стоимость заказа',
+                data: {{ costs|safe }},
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgb(255, 99, 132)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: 'Динамика стоимости заказов'
+                }
+            }
+        }
+    });
+  </script>
+</body>
+</html>
