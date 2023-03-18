@@ -12,8 +12,8 @@ from CanalServisProject.settings import TELEGRAM_CHANNEL, TELEGRAM_TOKEN
 @app.task
 def parse_google_sheets():
     '''
-        Автоматическая таска, которая каждую минуту получает данные из Google Sheets с помощью функции
-        get_data_spreadsheet и обновляет/удаляет/создает записи в БД с помощью функции insert_update_db.
+    Автоматическая таска, которая каждую минуту получает данные из Google Sheets с помощью функции
+    get_data_spreadsheet и обновляет/удаляет/создает записи в БД с помощью функции insert_update_db.
 
     :return: None
     '''
@@ -23,8 +23,9 @@ def parse_google_sheets():
 @app.task
 def check_date_delivery_task():
     '''
-        Автоматическая таска, которая каждый день в 9:15 просматривает данные в БД на условие просрочки срока поставки и
-        отправляет номер заказа и срок поставки на https://api.telegram.org/ .
+    Автоматическая таска, которая каждый день в 9:15 просматривает данные в БД на условие просрочки срока поставки и
+    отправляет номер заказа и срок поставки на https://api.telegram.org/ .
+
     :return: None
     '''
     bot_url = f'https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage?chat_id={TELEGRAM_CHANNEL}&text='

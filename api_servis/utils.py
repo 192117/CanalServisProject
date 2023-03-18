@@ -14,7 +14,8 @@ from .models import Order
 
 def get_rate_usd() -> float:
     '''
-        Функция, которая получает курс USD к RUB из API ЦБ РФ. Возвращает курс.
+    Функция, которая получает курс USD к RUB из API ЦБ РФ. Возвращает курс.
+
     :return: Курс USD к RUB в формате float.
     '''
     url = 'https://www.cbr.ru/scripts/XML_daily.asp'
@@ -25,8 +26,8 @@ def get_rate_usd() -> float:
 
 def get_data_spreadsheet() -> list:
     '''
-        Функция, которая делает запрос к Google Sheets и получает данные в диапазоне ячеек A:D и возвращает список
-        списков, сотоящие из строк Google Sheets.
+    Функция, которая делает запрос к Google Sheets и получает данные в диапазоне ячеек A:D и возвращает список
+    списков, сотоящие из строк Google Sheets.
 
     :return: Возвращает список списков, сотоящие из строк Google Sheets.
     '''
@@ -37,13 +38,14 @@ def get_data_spreadsheet() -> list:
         spreadsheetId=SPREADSHEET_ID,
         ranges=[SAMPLE_RANGE_NAME,]
     ).execute()
-    return result.get('valueRanges')[0].get('values', [])
+    range_values_sheets = result.get('valueRanges')[0].get('values', [])
+    return range_values_sheets
 
 
 def insert_update_db(values: list) -> None:
     '''
-        Функция, которая обновляет значения в БД, согласно полученным данным из Google Sheets. Записи в БД создаются,
-        обновляются или удаляются, если их номер заказа (столбец B) отсутсовал в переданных данных values.
+    Функция, которая обновляет значения в БД, согласно полученным данным из Google Sheets. Записи в БД создаются,
+    обновляются или удаляются, если их номер заказа (столбец B) отсутсовал в переданных данных values.
 
     :param values: Cписок списков, сотоящие из строк Google Sheets.
     :return: None

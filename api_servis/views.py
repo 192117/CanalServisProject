@@ -7,7 +7,7 @@ from .models import Order
 @require_GET
 def analytics(request):
     '''
-        Возвращает шаблон с данными о заказах для анализа.
+    Возвращает шаблон с данными о заказах для анализа.
 
     :param request: Принимает GET запрос, возвращает шаблон с данными.
     :return: Шаблон 'analytics.html'
