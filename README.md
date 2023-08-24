@@ -63,6 +63,6 @@
 
 [Google Sheets](https://docs.google.com/spreadsheets/d/1o2YLMwD7-J-ZiHhuH2tFmklQdMfxPaiqb3hSI7wIt4Y/edit?usp=sharing)
 
-[Страница с аналитикой](http://5.104.108.168:8005/analytics/)
+[Страница с аналитикой](http://157.90.14.181:8005/analytics/)
 
 [Телеграмм канал](https://t.me/Notifications192117)

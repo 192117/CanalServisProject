@@ -18,7 +18,7 @@ services:
       - redis
   db:
     restart: always
-    image: postgres:15.0-alpine
+    image: postgres:14.7-alpine
     container_name: 'canalservis_db'
     env_file:
       - ./.env.docker
@@ -27,7 +27,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U mail_app"]
+      test: ["CMD-SHELL", "pg_isready -U canalservis_user"]
       interval: 5s
       timeout: 5s
       retries: 5
